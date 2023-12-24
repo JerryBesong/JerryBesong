@@ -3,8 +3,7 @@
 - 🌱 I’m currently learning Python
 - 💞️ I’m looking to collaborate on python projects for now
 - 📫 How to reach me (send me msg jerrybesong@gmail.com)
-
-<!---
-JerryBesong/JerryBesong is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
+- 
 --->
+-  i am still trrying to get the right information i need to be able to set up my repo here
+-  i wont mind an assistance 
