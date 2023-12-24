@@ -3,6 +3,7 @@
 - 🌱 I’m currently learning Python
 - 💞️ I’m looking to collaborate on python projects for now
 - 📫 How to reach me (send me msg jerrybesong@gmail.com)
+- I wont mind you giving me tips on how to better my coding skills for DS
 - 
 --->
 -  i am still trrying to get the right information i need to be able to set up my repo here
