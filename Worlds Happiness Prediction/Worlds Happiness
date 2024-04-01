@@ -1,0 +1,136 @@
+# load necessary libaries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+#import os
+import sklearn
+from sklearn import linear_model
+from sklearn.metrics import mean_squared_error
+from chart_studio.plotly import plotly as py
+import plotly.offline as pyoff
+import plotly.graph_objs as go
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+init_notebook_mode(connected = True)
+import statsmodels.formula.api as stats
+from statsmodels.formula.api import ols
+
+# load all datas
+world_happiness_2015 = pd.read_csv("2015.csv")
+world_happiness_2016 = pd.read_csv("2016.csv")
+world_happiness_2017 = pd.read_csv("2017.csv")
+
+# print first 5 of 2015 data frame
+world_happiness_2015.head()
+
+# print first 5 of 2016 to have a view of the data set
+world_happiness_2016.head()
+
+# print first 5 of 2015 data frame to have a view of the data set
+world_happiness_2017.head()
+
+# concatinate the three dataset to a single data set
+con_world_happiness = [world_happiness_2015, world_happiness_2016, world_happiness_2017]
+combined_world_happiness = pd.concat(con_world_happiness)
+print("Done")
+
+# print our single data to have a view of the data set.
+combined_world_happiness.head()
+
+combined_world_happiness.columns
+combined_world_happiness.isnull().sum() # calculate the numbers of missing values in each columns
+
+# create a variable name to drop columns we wont be needing.
+drop_columns = ["Region", "Standard Error", "Lower Confidence Interval", "Upper Confidence Interval",
+                "Happiness.Rank", "Happiness.Score", "Whisker.high", "Whisker.low", "Economy..GDP.per.Capita.",
+                "Health..Life.Expectancy.", "Trust..Government.Corruption.", "Dystopia.Residual"]
+
+new_combined_world_happiness = combined_world_happiness.drop(drop_columns, axis= 1)
+new_combined_world_happiness.head()
+
+new_combined_world_happiness.info()
+new_combined_world_happiness.describe()
+new_combined_world_happiness.isna().sum()
+
+# Remove rows with any NaN values
+new_combined_world_happiness.dropna(inplace=True)
+new_combined_world_happiness.head()
+
+new_combined_world_happiness.isnull().sum()
+
+# using matlibplot to plot 
+x = new_combined_world_happiness.iloc[::,2].values
+y = new_combined_world_happiness.iloc[::,1].values
+
+plt.figure(figsize=(12, 6)) 
+plt.scatter(x,y)
+# Customize the plot (optional)
+plt.title('Happiness Rank Vs Score')
+plt.xlabel('Happiness Score')
+plt.ylabel('Happiness Rank')
+plt.grid(True)
+# plt.grid(True, linestyle='--', color='gray', alpha=0.5)
+
+# Display the plot
+plt.show()
+
+# plot a corrolation matrix to check out the heat map between variables.
+
+dropped_country = new_combined_world_happiness.drop(["Country","Happiness Rank"], axis=1)
+corrolation_heatmap = dropped_country.corr()
+plt.figure(figsize=(12, 6))  # Adjust the figure size as needed
+sns.heatmap(corrolation_heatmap, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Correlation Matrix Heatmap')
+plt.show()
+
+# rename the dataset and prepare to train and test data
+train_happy_world_df = dropped_country
+train_happy_world_df.head()
+from sklearn.model_selection import train_test_split
+x = train_happy_world_df.drop("Happiness Score", axis= 1) # keeping all independent variables on x
+y = train_happy_world_df["Happiness Score"] # making y store just the dependendent variable
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.20)
+print ("done")
+print ("Training data:",x_test.shape, y_train.shape)
+print ("Test data:",x_test.shape, y_test.shape)
+
+from sklearn.linear_model import LinearRegression
+lg = LinearRegression()
+lg.fit(x,y)
+
+y_pred = lg.predict(x_test)
+
+# create a table that calculates the difference between the predict values and actual values
+result_lg = pd.DataFrame({"Actual": y_test, "Predict": y_pred})
+result_lg["Difference"] = y_test - y_pred
+result_lg.head()
+# The coefficients
+print("Estimated Intercept is: ", lg.intercept_)
+# The coefficients
+print('Coefficients: \n', lg.coef_)
+
+# create a table that takes in all columus and gives the coefficients
+
+coef_df = pd.DataFrame(list(zip(x.columns, lg.coef_)),columns= ["Features", "Coefficients"])
+coef_df
+
+# to find out if our model is accuratly in a good fit.
+from sklearn.metrics import mean_absolute_error
+print("Mean Absolute Error: ", mean_absolute_error(y_test, y_pred))
+print("Mean Squared Error: ", mean_squared_error(y_test, y_pred))
+print("Root Mean Squared Error: ", np.sqrt(mean_squared_error(y_test, y_pred)))
+
+# variance score: 1 means its a perfect prediction
+print("Variance Score: %.2f " % lg.score(x_test, y_test))
+
+sns.regplot(x= "Actual", y= "Predict", data = result_lg) 
+plt.figure(figsize=(12, 6))
+
+data = dict(type = "choropleth", locations = new_combined_world_happiness["Country"],
+            locationmode= "country names", z = new_combined_world_happiness["Happiness Rank"], 
+            text = new_combined_world_happiness["Country"], colorscale = "viridis")
+
+layout = dict(title = "Happiness Rank Across The world")
+fig= go.Figure(data = [data], layout = layout)
+iplot(fig)
