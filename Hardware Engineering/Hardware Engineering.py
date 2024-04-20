@@ -1,13 +1,13 @@
 # define the items for sale 
 hammer_price = 5
 wrench_price = 10
-drill_price = 15
+driller_price = 15
 
 # create a shopping cart
 shopping_cart = 0
 hammer_quantity = 0
 wrench_quantity = 0
-drill_quantity = 0
+driller_quantity = 0
 
 # generate greeting
 print("Hello and welcome to Prudence DIY Store! \n")
@@ -31,7 +31,7 @@ while True:
                           "Items for Sale:\n"
                           "Hammer (£5)\n"
                           "Wrench (£10)\n"
-                          "Drill (£15)\n"
+                          "Driller (£15)\n"
                           " \n"
                           "Please type the name of an item you would like to add to cart.\n"
                           "Or type MENU to return"
@@ -48,9 +48,9 @@ while True:
             print(f"You have added {wrench_quantity} wrench/es to your cart")
             
         elif browsing_menu_choice == "drill":
-            drill_quantity += int(input("You have selected Drill.\n"
+            driller_quantity += int(input("You have selected Drill.\n"
                                            "Please enter the quantity you would like to add to your cart: "))
-            print(f"You have added {drill_quantity} drill/s to your cart")
+            print(f"You have added {driller_quantity} drill/s to your cart")
             
         elif browsing_menu_choice == "menu":
             continue
@@ -60,7 +60,7 @@ while True:
                 "Please check your spelling, and try again")
                  
          # calculate the total shopping cart value after adding items
-        shopping_cart = (hammer_price * hammer_quantity) + (wrench_price * wrench_quantity) + (drill_price * drill_quantity)
+        shopping_cart = (hammer_price * hammer_quantity) + (wrench_price * wrench_quantity) + (driller_price * driller_quantity)
         
 
     # program the option to view the cart 
@@ -69,7 +69,7 @@ while True:
                 "\n"
                 f"Hammer: {hammer_quantity} pieces\n"
                 f"Wrench: {wrench_quantity} pieces\n"
-                f"Drill: {drill_quantity} pieces\n"
+                f"Drill: {driller_quantity} pieces\n"
                 "\n"
                 "---------\n"
                 "\n"
@@ -98,9 +98,9 @@ while True:
                     print(f"You now have {wrench_quantity} wrench/es in your cart")
                
                 elif item_alteration_choice == "drill":
-                    drill_quantity = int(input("You have selected Drill.\n"
+                    driller_quantity = int(input("You have selected Drill.\n"
                                            "Please enter the quantity you would like in your cart: "))
-                    print(f"You now have {drill_quantity} drill/s in your cart")
+                    print(f"You now have {driller_quantity} drill/s in your cart")
                 else:
                     print("\nInput Error!\n"
                      "Please check your spelling, and try again")   
@@ -109,7 +109,7 @@ while True:
                     "Please check your spelling, and try again") 
                
                 # calculate the total shopping cart value after adding items
-            shopping_cart = (hammer_price * hammer_quantity) + (wrench_price * wrench_quantity) + (drill_price * drill_quantity)
+            shopping_cart = (hammer_price * hammer_quantity) + (wrench_price * wrench_quantity) + (driller_price * driller_quantity)
 
     # program option 3 to exit the store
     elif main_menu_choice == "3":
@@ -119,9 +119,3 @@ while True:
     else: print("\nInput Error!\n"
           "Please check your spelling, and try again")
                 
-
-
-                    
-                    
-
-                    
