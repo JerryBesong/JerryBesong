@@ -10,7 +10,7 @@ wrench_quantity = 0
 drill_quantity = 0
 
 # generate greeting
-print("Hello and welcome to the Hardware engineering shop! \n")
+print("Hello and welcome to Prudence DIY Store! \n")
 
 # create a while loop to continously prompt the user for a choice
 while True:
@@ -80,7 +80,7 @@ while True:
                                  "").upper()
             
             if confirm_cart == "YES":
-                print("Thank You for Shopping at The Hardware Engineering Store. Goodbye!")
+                print("Thank You for Shopping at Prudence DIY Store. Goodbye!")
                 break
 
             # program an option to edit the cart
@@ -113,7 +113,7 @@ while True:
 
     # program option 3 to exit the store
     elif main_menu_choice == "3":
-        print("Thanks for visiting The Hardware Engineering Store!\n"
+        print("Thanks for visiting Prudence DIY Store!\n"
               "We hope to see you again soon!")
         break
     else: print("\nInput Error!\n"
